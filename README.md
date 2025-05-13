@@ -66,8 +66,8 @@ A small-scale restaurant Point of Sale (POS) system designed to streamline food 
 
 ## Developers
 
-- \Carol Marie Joyce M. Licarte
-- \Justin Gabriel Sausa
+- Carol Marie Joyce M. Licarte
+- Justin Gabriel Sausa
 
 ## Screenshots
 

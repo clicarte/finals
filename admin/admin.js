@@ -1,9 +1,9 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     let inputCode = null, accessCode = 4321;
     do {
         inputCode = parseInt(prompt('Enter access code:'));
     } while (inputCode !== accessCode);
-    
+
     // DOM Elements
     const productForm = document.getElementById('product-form');
     const productList = document.getElementById('product-list');
@@ -11,7 +11,55 @@ document.addEventListener('DOMContentLoaded', function () {
     const productCategory = document.getElementById("product-category");
 
     // Load products from localStorage
-    let products = JSON.parse(localStorage.getItem('posProducts')) || [];
+    noProductsMessage.textContent = 'Loading...';
+    let products = localStorage.getItem('posProducts'); // check for cached data
+
+    if (products) { // if data is cached
+        try {
+            products = JSON.parse(products);
+        } catch (error) {
+            console.error('Error parsing posProducts from localStorage:', error);
+            products = [];
+        }
+    } else { // if no data is cached
+        const data = await fetch("https://free-food-menus-api-two.vercel.app/all")
+            .then(res => res.json())
+            .then(data => {
+
+                // remove pagination, our foods, and best foods
+                const response = data;
+                delete response.pagination;
+                delete response['our-foods'];
+                delete response['best-foods'];
+
+                const reducedData = {};
+                const productArray = [];
+
+                for (const [category, products] of Object.entries(response)) {
+                    // limit data received to 10 so as to not cause lag
+                    reducedData[category] = products.slice(0, 10);
+
+                    // push products to productArray with converted format
+                    reducedData[category].forEach(product => {
+                        productArray.push({
+                            id: product.id,
+                            name: product.name,
+                            price: product.price,
+                            category: category.replace('-', ' '),
+                            image: product.img
+                        });
+                    })
+                }
+
+                return productArray;
+            });
+
+        localStorage.setItem('posProducts', JSON.stringify(data));
+
+        products = data;
+
+        renderProducts();
+    }
 
     // Initialize display
     renderProducts();

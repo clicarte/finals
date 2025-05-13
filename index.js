@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', async function () {
+    // Table data
+    let tableNumber = null, guestCount = null;
+    do {
+        tableNumber = prompt('Enter table number:');
+        guestCount = prompt('Enter guest count:');
+    } while (!tableNumber || !guestCount);
+
+    tableNumber = parseInt(tableNumber); // convert to number
+    guestCount = parseInt(guestCount);
+    document.getElementById('tableNumber').textContent = `Table ${tableNumber} (${guestCount} guest${guestCount <= 1 ? '' : 's'})`;
+
     // DOM Elements
     const menuItemsContainer = document.getElementById('menu-items');
     const noMenuItemsMessage = document.getElementById('no-menu-items-message');
@@ -15,29 +26,19 @@ document.addEventListener('DOMContentLoaded', async function () {
     const newOrderBtn = document.getElementById('new-order-btn');
     const closeModalBtn = document.querySelector('.close-modal');
 
-    // Table data
-    let tableNumber = null, guestCount = null;
-    do {
-        tableNumber = prompt('Enter table number:');
-        guestCount = prompt('Enter guest count:');
-    } while (!tableNumber || !guestCount);
-
-    tableNumber = parseInt(tableNumber);
-    document.getElementById('tableNumber').textContent = `Table ${tableNumber} (${guestCount} guest${guestCount == 1 ? '' : 's'})`;
-
     // State
     let loadingData = true;
     noMenuItemsMessage.textContent = 'Loading...';
-    let products = localStorage.getItem('posProducts');
+    let products = localStorage.getItem('posProducts'); // check for cached data
 
-    if (products) {
+    if (products) { // if data is cached
         try {
             products = JSON.parse(products);
         } catch (error) {
             console.error('Error parsing posProducts from localStorage:', error);
             products = [];
         }
-    } else {
+    } else { // if no data is cached
         const data = await fetch("https://free-food-menus-api-two.vercel.app/all")
             .then(res => res.json())
             .then(data => {
@@ -71,6 +72,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
 
         localStorage.setItem('posProducts', JSON.stringify(data));
+        products = data;
     }
 
     let currentOrder = {
@@ -218,7 +220,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     function updateOrderSummary() {
         const subtotal = currentOrder.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const taxRate = 0.12; // 8% tax
+        const taxRate = 0.12; // 12% tax
         const tax = subtotal * taxRate;
         const total = subtotal + tax;
 
@@ -300,7 +302,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     async function renderCategories() {
         const data = await fetch("https://free-food-menus-api-two.vercel.app/pagination")
             .then(res => res.json());
-        let categories = Object.keys(data.pagination);
+        let categories = Object.keys(data.pagination); // retrieve keys from pagination (keys are categories)
 
         // exclude 'Our Foods' and 'Best Foods'
         categories = categories.filter(category => category !== 'our-foods' && category !== 'best-foods');
