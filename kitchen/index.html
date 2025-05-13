@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Kitchen | Orders</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <div class="app-container kitchen">
+        <header>
+            <div class="header-content">
+                <div class="header-left">
+                    <img src="/public/ribbon.png" alt="POS Logo" width="50" />
+                    <h1>Point of Sale</h1>
+                </div>
+                <!-- <nav>
+                    <ul>
+                        <li><a href="admin.html">Admin</a></li>
+                        <li><a href="index.html">Customer</a></li>
+                        <li><a href="kitchen.html" class="active">Kitchen</a></li>
+                    </ul>
+                </nav> -->
+            </div>
+        </header>
+
+        <main>
+            <section class="kitchen-panel">
+                <div class="order-filters">
+                    <button class="filter-btn active" data-status="pending">Pending</button>
+                    <button class="filter-btn" data-status="preparing">Preparing</button>
+                    <button class="filter-btn" data-status="ready">Ready</button>
+                    <button class="filter-btn" data-status="completed">Completed</button>
+                </div>
+
+                <div class="orders-container" id="orders-container">
+                    <p id="no-orders-message">No pending orders.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Copyright &copy; 2025</p>
+        </footer>
+    </div>
+
+    <script src="/kitchen/kitchen.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS | Order Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container customer">
+        <header>
+            <div class="header-content">
+                <div class="header-left">
+                    <img src="public/ribbon.png" alt="POS Logo" width="50" />
+                    <h1>Point of Sale</h1>
+                </div>
+                <!-- <nav>
+                    <ul>
+                        <li><a href="admin.html">Admin</a></li>
+                        <li><a href="index.html" class="active">Customer</a></li>
+                        <li><a href="kitchen.html">Kitchen</a></li>
+                    </ul>
+                </nav> -->
+            </div>
+        </header>
+
+        <main>
+            <h3 id="tableNumber"></h3>
+            <div class="customer-layout">
+                <section class="menu-section">
+                    <div class="category-filter" id="categoryList">
+                        <button class="filter-btn active" data-category="all">All Items</button>
+                        <!-- <button class="filter-btn" data-category="food">Food</button>
+                        <button class="filter-btn" data-category="drink">Drinks</button>
+                        <button class="filter-btn" data-category="dessert">Desserts</button> -->
+                    </div>
+
+                    <div class="menu-items" id="menu-items">
+                        <p id="no-menu-items-message">No menu items available.</p>
+                    </div>
+
+
+                </section>
+
+                <section class="order-section" style="height: fit-content;">
+                    <h2>Current Order</h2>
+                    <div class="order-items" id="order-items">
+                        <p id="empty-order-message">Your order is empty.</p>
+                    </div>
+
+                    <div class="order-summary" id="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (12%)</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button id="place-order-btn" class="btn btn-primary">Place Order</button>
+                    <button id="clear-order-btn" class="btn btn-secondary">Clear Order</button>
+                </section>
+            </div>
+        </main>
+
+        <div id="order-confirmation" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Order Confirmed</h2>
+                <p>Your order has been sent to the kitchen.</p>
+                <p>Order #: <span id="order-number"></span></p>
+                <button id="new-order-btn" class="btn btn-primary">Start New Order</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>Copyright &copy; 2025</p>
+        </footer>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
